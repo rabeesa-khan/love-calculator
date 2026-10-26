@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Crazy Love & Vibe Tester</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&family=Outfit:wght@500;700;900&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background-color: #0d0b14;
+            color: #ffffff;
+        }
+        .heading-font {
+            font-family: 'Outfit', sans-serif;
+        }
+        .glow-card {
+            background: rgba(22, 17, 35, 0.85);
+            backdrop-filter: blur(16px);
+            border: 1.5px solid rgba(244, 114, 182, 0.25);
+            box-shadow: 0 0 35px rgba(236, 72, 153, 0.15);
+        }
+        .glow-button {
+            box-shadow: 0 0 20px rgba(244, 114, 182, 0.4);
+        }
+        .glow-button:hover {
+            box-shadow: 0 0 30px rgba(244, 114, 182, 0.7);
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col items-center justify-between p-4 sm:p-6 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-purple-900/30 via-gray-950 to-black">
+
+    <!-- Header Section -->
+    <div class="text-center max-w-lg mt-8 space-y-3">
+        <span class="px-4 py-1.5 rounded-full text-xs font-semibold uppercase tracking-widest bg-pink-500/10 text-pink-400 border border-pink-500/30">
+            Fully Unhinged & Custom
+        </span>
+        <h1 class="heading-font text-4xl sm:text-6xl font-black tracking-tight text-white leading-tight">
+            Love & Chaos <span class="text-transparent bg-clip-text bg-gradient-to-r from-pink-400 via-purple-400 to-indigo-400">Calculator</span>
+        </h1>
+        <p class="text-gray-400 text-xs sm:text-sm max-w-sm mx-auto">
+            Drop two names below and let the crazy algorithm judge your entire dynamic.
+        </p>
+    </div>
+
+    <!-- Main Card -->
+    <div class="max-w-md w-full glow-card p-6 sm:p-8 rounded-3xl text-center my-8 space-y-6 relative overflow-hidden">
+        
+        <!-- Input Form -->
+        <div class="space-y-4">
+            <div class="text-left space-y-1">
+                <label class="text-xs font-semibold text-gray-400 ml-1">First Name</label>
+                <input type="text" id="person1" placeholder="e.g. Beso" class="w-full px-4 py-3.5 rounded-2xl bg-gray-900/90 border border-purple-500/20 text-white placeholder-gray-600 text-sm focus:outline-none focus:border-pink-500 transition">
+            </div>
+
+            <div class="text-left space-y-1">
+                <label class="text-xs font-semibold text-gray-400 ml-1">Second Name</label>
+                <input type="text" id="person2" placeholder="e.g. Crush / Friend" class="w-full px-4 py-3.5 rounded-2xl bg-gray-900/90 border border-purple-500/20 text-white placeholder-gray-600 text-sm focus:outline-none focus:border-pink-500 transition">
+            </div>
+
+            <button onclick="calculateLove()" class="w-full py-4 bg-gradient-to-r from-pink-500 via-purple-500 to-indigo-600 font-bold text-xs uppercase tracking-widest rounded-2xl text-white glow-button transition duration-300 transform active:scale-95 mt-2">
+                Calculate Now 💘
+            </button>
+        </div>
+
+        <!-- Dynamic Result Card -->
+        <div id="resultBox" class="hidden pt-6 border-t border-purple-900/40 space-y-4">
+            <div class="space-y-1">
+                <span id="vibeBadge" class="inline-block px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider bg-pink-500/20 text-pink-300 border border-pink-500/30"></span>
+                <div id="vibeScore" class="heading-font text-5xl font-black text-transparent bg-clip-text bg-gradient-to-r from-pink-400 to-purple-300"></div>
+            </div>
+
+            <div class="bg-gray-950/60 p-4 rounded-2xl border border-purple-500/10 space-y-2">
+                <h4 id="pairTitle" class="text-sm font-bold text-pink-300"></h4>
+                <p id="vibeReview" class="text-xs text-gray-300 leading-relaxed italic"></p>
+            </div>
+
+            <button onclick="copyResult()" id="shareBtn" class="w-full py-2.5 bg-gray-900 hover:bg-gray-800 text-gray-300 font-semibold text-xs rounded-xl border border-gray-700 transition flex items-center justify-center gap-2">
+                <span>Copy Result to Share</span>
+            </button>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="text-center text-gray-600 text-xs mb-4">
+        Custom Match Engine &bull; 100% Unique Results
+    </footer>
+
+    <!-- JavaScript Logic -->
+    <script>
+        const crazyReviews = [
+            "Lagta hai agli shadi tum dono ki hi honi hai. Shadi ka card pehle humein bhejna! 😂🔥",
+            "Acha scene hai! Thodi aur baat karo, baaki baatein khud-ba-खुद samajh aa jayengi. 😉✨",
+            "Pure chaotic energy! Tum dono mil kar kisi bhi din poora group sar par utha sakte ho. 🌪️",
+            "Friendzone se nikalne mein abhi thoda waqt lagega, par vibe full match hai! 🛹",
+            "Absolute W match! Nazar na lage kahin, ekdum solid connection hai. 💯",
+            "Din bhar ladna aur phir raat ko 3 ghante baatein karna — yhi hai tum dono ki kahani. 💀",
+            "Silent telepathy! Tumhein bolne ki zaroorat nahi padti, saamne wala khud samajh jata hai.",
+            "Dangerously funny combination. Log sochenge yeh dosti hai ya kuch aur! 🤭",
+            "Main character energy! Jab ye dono sath hote hain toh baaki sab mute ho jate hain."
+        ];
+
+        const badges = [
+            "Certified Soulmates", "Chaotic Disaster", "Secret lovers spotted", 
+            "Main Character Duo", "Professional Teasers", "Iconic Pair", "Dangerous Combination"
+        ];
+
+        function calculateLove() {
+            const name1 = document.getElementById('person1').value.trim();
+            const name2 = document.getElementById('person2').value.trim();
+
+            if (!name1 || !name2) {
+                alert("Oye! Dono names toh daalo pehle! 😉");
+                return;
+            }
+
+            // Create unique numeric hash from both names combined
+            const sortedCombo = [name1.toLowerCase(), name2.toLowerCase()].sort().join("");
+            let hash = 0;
+            for (let i = 0; i < sortedCombo.length; i++) {
+                hash = sortedCombo.charCodeAt(i) + ((hash << 5) - hash);
+            }
+            
+            const absHash = Math.abs(hash);
+            const score = (absHash % 46) + 55; // Score always between 55% and 100%
+            const reviewIndex = absHash % crazyReviews.length;
+            const badgeIndex = absHash % badges.length;
+
+            document.getElementById('vibeBadge').innerText = badges[badgeIndex];
+            document.getElementById('vibeScore').innerText = `${score}% MATCH`;
+            document.getElementById('pairTitle').innerText = `${name1} & ${name2}`;
+            document.getElementById('vibeReview').innerText = `"${crazyReviews[reviewIndex]}"`;
+            
+            document.getElementById('resultBox').classList.remove('hidden');
+        }
+
+        function copyResult() {
+            const name1 = document.getElementById('person1').value.trim();
+            const name2 = document.getElementById('person2').value.trim();
+            const score = document.getElementById('vibeScore').innerText;
+            const review = document.getElementById('vibeReview').innerText;
+
+            const textToCopy = `✨ Love & Chaos Result ✨\n${name1} & ${name2}\nScore: ${score}\nVerdict: ${review}\n\nCheck yours now!`;
+
+            navigator.clipboard.writeText(textToCopy).then(() => {
+                const btn = document.getElementById('shareBtn');
+                btn.innerText = "Copied to Clipboard! ✨";
+                setTimeout(() => {
+                    btn.innerText = "Copy Result to Share";
+                }, 2000);
+            });
+        }
+    </script>
+</body>
+</html>
